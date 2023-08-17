@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import FooterLayout from "../layout/FooterLayout.vue";
 import HeaderLayout from "../layout/HeaderLayout.vue";
+import UserConnectButton from "../user/UserConnectButton.vue";
 </script>
 
 <template>
   <HeaderLayout />
   <main>
-    <h1>Map Route</h1>
+    <UserConnectButton />
   </main>
   <FooterLayout />
 </template>

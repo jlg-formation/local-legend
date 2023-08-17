@@ -1,7 +1,7 @@
 import HomeRoute from "./HomeRoute.vue";
 import LegalRoute from "./LegalRoute.vue";
 import ExchangeTokenRoute from "./ExchangeTokenRoute.vue";
-import MapRoute from "./MapRoute.vue";
+import SigninRoute from "./SigninRoute.vue";
 
 export const routes = [
   { path: "/", name: "Home", component: HomeRoute },
@@ -11,5 +11,5 @@ export const routes = [
     name: "ExchangeToken",
     component: ExchangeTokenRoute,
   },
-  { path: "/map", name: "Map", component: MapRoute },
+  { path: "/signin", name: "Signin", component: SigninRoute },
 ];

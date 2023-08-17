@@ -1,13 +1,21 @@
 <script setup lang="ts">
-import HeaderLayout from "../layout/HeaderLayout.vue";
+import { useRouter } from "vue-router";
+import { useUserStore } from "../../stores/user.store";
 import FooterLayout from "../layout/FooterLayout.vue";
-import UserConnectButton from "../user/UserConnectButton.vue";
+import HeaderLayout from "../layout/HeaderLayout.vue";
+
+const router = useRouter();
+const userStore = useUserStore();
+console.log("userStore.isAuthenticated: ", userStore.isAuthenticated);
+if (!userStore.isAuthenticated) {
+  router.replace({ name: "Signin" });
+}
 </script>
 
 <template>
   <HeaderLayout />
   <main>
-    <UserConnectButton />
+    <h1>Home Route</h1>
   </main>
   <FooterLayout />
 </template>

@@ -20,7 +20,7 @@ onMounted(async () => {
   const userStore = useUserStore();
   await userStore.signin(code);
 
-  router.replace({ name: "Map" });
+  router.replace({ name: "Home" });
 });
 </script>
 
