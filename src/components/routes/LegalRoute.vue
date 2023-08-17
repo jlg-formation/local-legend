@@ -13,6 +13,11 @@ import FooterLayout from "../layout/FooterLayout.vue";
       recusandae cupiditate eius aut veritatis sint officiis vero sit debitis
       quas.
     </p>
+    <p>
+      &copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy;
+      <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy;
+      <a href="http://openstreetmap.org">OpenStreetMap</a> contributors
+    </p>
   </main>
   <FooterLayout />
 </template>

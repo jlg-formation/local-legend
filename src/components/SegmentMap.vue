@@ -10,16 +10,20 @@ onMounted(async () => {
   if (mapElement.value === null) {
     throw new Error("Cannot find the map Element");
   }
-  const map = L.map(mapElement.value).setView(location, 13);
+  const map = L.map(mapElement.value, { zoomControl: false }).setView(
+    location,
+    13
+  );
 
   L.tileLayer(
     "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png",
     {
       maxZoom: 20,
-      attribution:
-        '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+      attribution: "",
     }
   ).addTo(map);
+
+  L.control.scale({ imperial: false }).addTo(map);
 });
 </script>
 
