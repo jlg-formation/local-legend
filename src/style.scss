@@ -1,6 +1,16 @@
 @use "../node_modules/normalize.css/normalize.css";
 @use "../node_modules/sanitize.css/sanitize.css";
 
+@use "./scss/button.scss";
+
 body {
   font-family: sans-serif;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
 }
