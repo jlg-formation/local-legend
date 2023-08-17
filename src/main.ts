@@ -1,5 +1,9 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
+import { fontawesome } from "./plugins/font-awesome";
+import "./style.scss";
 
-createApp(App).mount('#app')
+const app = createApp(App);
+app.use(fontawesome);
+
+app.mount("#app");

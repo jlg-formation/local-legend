@@ -1,0 +1,20 @@
+<template>
+  <footer>
+    <a href="#"> Legal Information </a>
+  </footer>
+</template>
+
+<style lang="scss" scoped>
+footer {
+  background: #eee;
+  height: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  a {
+    text-decoration: inherit;
+    color: inherit;
+  }
+}
+</style>
