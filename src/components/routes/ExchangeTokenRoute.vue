@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useUserStore } from "../../stores/user.store";
 
 onMounted(() => {
   console.log("mounted");
 
-  const location = window.location;
-  console.log("location: ", JSON.stringify(location));
   const hash = window.location.hash;
-  console.log("hash: ", hash);
   const queryString = hash.replace(/^.*\?/, "");
-  console.log("queryString: ", queryString);
-
   const params = new URLSearchParams(queryString);
-  console.log("params: ", params.get("code"));
+  const code = params.get("code");
+  if (code === null) {
+    throw new Error("code is null");
+  }
+  console.log("code: ", code);
+
+  const userStore = useUserStore();
+  userStore.signin(code);
 
   const router = useRouter();
   router.replace({ name: "Map" });
