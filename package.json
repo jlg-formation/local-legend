@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
+    "build:gh-pages": "vue-tsc && vite build --outDir docs --base /local-legend/",
     "preview": "vite preview"
   },
   "dependencies": {
