@@ -2,9 +2,12 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { TokenObject } from "../interfaces/TokenObject";
 import { stravaApi } from "../strava.api";
+import { appCache } from "../utils/cache";
 
 export const useUserStore = defineStore("user", () => {
-  const tokenObject = ref<TokenObject | undefined>(undefined);
+  const tokenObject = ref<TokenObject | undefined>(
+    appCache.get<TokenObject>("tokenObject")
+  );
 
   const signin = async (authorizationCode: string) => {
     console.log("signin with newCode", authorizationCode);
@@ -14,6 +17,7 @@ export const useUserStore = defineStore("user", () => {
 
     tokenObject.value = newTokenObject;
     stravaApi.tokenObject = newTokenObject;
+    appCache.set<TokenObject>("tokenObject", newTokenObject);
   };
   const signout = () => {
     tokenObject.value = undefined;
