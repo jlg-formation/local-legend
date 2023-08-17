@@ -1,19 +1,25 @@
 <script setup lang="ts">
 import * as L from "leaflet";
 import { onMounted, ref } from "vue";
+import { getInitialLocation } from "../utils/location";
 
 const mapElement = ref<HTMLElement | null>(null);
 
-onMounted(() => {
+onMounted(async () => {
+  const location = await getInitialLocation();
   if (mapElement.value === null) {
     throw new Error("Cannot find the map Element");
   }
-  const map = L.map(mapElement.value).setView([51.505, -0.09], 13);
+  const map = L.map(mapElement.value).setView(location, 13);
 
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: "© OpenStreetMap",
-  }).addTo(map);
+  L.tileLayer(
+    "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png",
+    {
+      maxZoom: 20,
+      attribution:
+        '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+    }
+  ).addTo(map);
 });
 </script>
 
