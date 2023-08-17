@@ -1,14 +1,18 @@
 class AppCache {
-  get<T>(str: string) {
-    const value = localStorage.getItem(str);
+  get<T>(key: string) {
+    const value = localStorage.getItem(key);
     if (value === null) {
       return undefined;
     }
     return JSON.parse(value) as T;
   }
 
-  set<T>(str: string, value: T) {
-    localStorage.setItem(str, JSON.stringify(value));
+  remove(key: string) {
+    localStorage.removeItem(key);
+  }
+
+  set<T>(key: string, value: T) {
+    localStorage.setItem(key, JSON.stringify(value));
   }
 }
 

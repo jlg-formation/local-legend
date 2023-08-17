@@ -6,11 +6,14 @@ const userStore = useUserStore();
 
 <template>
   <div class="round-button" v-if="userStore.tokenObject">
-    <img
-      :src="userStore.tokenObject.athlete.profile_medium"
-      alt="Profile photo"
-    />
+    <router-link to="/user">
+      <img
+        :src="userStore.tokenObject.athlete.profile_medium"
+        alt="Profile photo"
+      />
+    </router-link>
   </div>
+
   <div class="round-button" v-else>
     <font-awesome-icon icon="right-to-bracket" />
   </div>

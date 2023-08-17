@@ -22,6 +22,7 @@ export const useUserStore = defineStore("user", () => {
   const signout = () => {
     tokenObject.value = undefined;
     stravaApi.tokenObject = undefined;
+    appCache.remove("tokenObject");
   };
 
   const isAuthenticated = computed(() => {
