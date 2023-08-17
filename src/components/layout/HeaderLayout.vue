@@ -4,10 +4,10 @@ import UserButton from "../UserButton.vue";
 
 <template>
   <header>
-    <a href="#">
+    <router-link to="/">
       <img src="/logo.svg" alt="Local Legend" />
       <span>Local Legend</span>
-    </a>
+    </router-link>
     <UserButton />
   </header>
 </template>

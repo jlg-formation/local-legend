@@ -1,15 +1,6 @@
-<script setup lang="ts">
-import HeaderLayout from "./components/layout/HeaderLayout.vue";
-import FooterLayout from "./components/layout/FooterLayout.vue";
-</script>
-
 <template>
   <div class="layout">
-    <HeaderLayout />
-    <main>
-      <button>Connect with Strava</button>
-    </main>
-    <FooterLayout />
+    <router-view></router-view>
   </div>
 </template>
 
