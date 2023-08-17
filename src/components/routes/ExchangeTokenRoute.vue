@@ -3,6 +3,8 @@ import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../../stores/user.store";
 
+const router = useRouter();
+
 onMounted(async () => {
   console.log("mounted");
 
@@ -18,7 +20,6 @@ onMounted(async () => {
   const userStore = useUserStore();
   await userStore.signin(code);
 
-  const router = useRouter();
   router.replace({ name: "Map" });
 });
 </script>

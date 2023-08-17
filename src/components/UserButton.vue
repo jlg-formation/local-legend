@@ -5,8 +5,8 @@ const userStore = useUserStore();
 </script>
 
 <template>
-  <div class="round-button" v-if="userStore.isAuthenticated">
-    {{ userStore.athlete?.lastname }}
+  <div class="round-button" v-if="userStore.athlete">
+    <img :src="userStore.athlete.profile_medium" alt="Profile photo" />
   </div>
   <div class="round-button" v-else>
     <font-awesome-icon icon="right-to-bracket" />
@@ -28,6 +28,11 @@ const userStore = useUserStore();
   }
   &:active {
     background: #bbb;
+  }
+
+  img {
+    height: 2.5em;
+    border-radius: 100%;
   }
 }
 </style>
