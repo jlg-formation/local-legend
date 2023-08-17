@@ -15,12 +15,12 @@ export const useUserStore = defineStore("user", () => {
     console.log("tokenObject: ", tokenObject);
 
     code.value = tokenObject.access_token;
-    stravaApi.code = tokenObject.access_token;
+    stravaApi.accessCode = tokenObject.access_token;
     await checkConnection();
   };
   const signout = () => {
     code.value = undefined;
-    stravaApi.code = "xxx";
+    stravaApi.accessCode = "xxx";
   };
 
   const checkConnection = async () => {

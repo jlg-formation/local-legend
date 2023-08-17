@@ -4,21 +4,21 @@ import { Athlete } from "./interfaces/Athlete";
 const url = "https://www.strava.com/api/v3";
 
 class StravaApi {
-  code = "xxx";
+  accessCode = "xxx";
 
   async fetch(url: string, options?: RequestInit) {
-    console.log("this.code: ", this.code);
+    console.log("this.code: ", this.accessCode);
     const response = await fetch(url, {
       ...options,
       headers: {
-        Authorization: `Bearer ${this.code}`,
+        Authorization: `Bearer ${this.accessCode}`,
       },
     });
     return response;
   }
 
   async getCurrentAthlete(): Promise<Athlete> {
-    console.log("getCurrentAthlete this code = " + this.code);
+    console.log("getCurrentAthlete this code = " + this.accessCode);
     const response = await this.fetch(url + "/athlete");
     if (response.status === 401) {
       throw new AuthenticationError();
