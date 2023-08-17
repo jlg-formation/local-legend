@@ -2,6 +2,7 @@
 import { useRouter } from "vue-router";
 import { useUserStore } from "../../stores/user.store";
 import HeaderLayout from "../layout/HeaderLayout.vue";
+import SegmentMap from "../SegmentMap.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -14,6 +15,6 @@ if (!userStore.isAuthenticated) {
 <template>
   <HeaderLayout />
   <main>
-    <h1>Home Route</h1>
+    <SegmentMap />
   </main>
 </template>
