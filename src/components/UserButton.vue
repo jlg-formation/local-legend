@@ -1,5 +1,14 @@
+<script setup lang="ts">
+import { useUserStore } from "../stores/user.store";
+
+const userStore = useUserStore();
+</script>
+
 <template>
-  <div class="round-button">
+  <div class="round-button" v-if="userStore.isAuthenticated">
+    {{ userStore.athlete?.lastname }}
+  </div>
+  <div class="round-button" v-else>
     <font-awesome-icon icon="right-to-bracket" />
   </div>
 </template>
