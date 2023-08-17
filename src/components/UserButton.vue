@@ -5,8 +5,11 @@ const userStore = useUserStore();
 </script>
 
 <template>
-  <div class="round-button" v-if="userStore.athlete">
-    <img :src="userStore.athlete.profile_medium" alt="Profile photo" />
+  <div class="round-button" v-if="userStore.tokenObject">
+    <img
+      :src="userStore.tokenObject.athlete.profile_medium"
+      alt="Profile photo"
+    />
   </div>
   <div class="round-button" v-else>
     <font-awesome-icon icon="right-to-bracket" />

@@ -1,34 +1,25 @@
 import { AuthenticationError } from "./errors/errors";
-import { Athlete } from "./interfaces/Athlete";
+import { TokenObject } from "./interfaces/TokenObject";
 
 const url = "https://www.strava.com/api/v3";
 
 class StravaApi {
-  accessCode = "xxx";
+  tokenObject: TokenObject | undefined;
 
   async fetch(url: string, options?: RequestInit) {
-    console.log("this.code: ", this.accessCode);
+    if (!this.tokenObject) {
+      throw new AuthenticationError();
+    }
     const response = await fetch(url, {
       ...options,
       headers: {
-        Authorization: `Bearer ${this.accessCode}`,
+        Authorization: `Bearer ${this.tokenObject.access_token}`,
       },
     });
     return response;
   }
 
-  async getCurrentAthlete(): Promise<Athlete> {
-    console.log("getCurrentAthlete this code = " + this.accessCode);
-    const response = await this.fetch(url + "/athlete");
-    if (response.status === 401) {
-      throw new AuthenticationError();
-    }
-    const json: Athlete = await response.json();
-    return json;
-  }
-
-  async getTokenObject(authorizationCode: string) {
-    console.log("getTokenObject with authorization code = ", authorizationCode);
+  async getTokenObject(authorizationCode: string): Promise<TokenObject> {
     const response = await fetch(url + `/oauth/token`, {
       method: "POST",
       headers: {
@@ -42,7 +33,6 @@ class StravaApi {
       }),
     });
     const json = await response.json();
-    console.log("json: ", json);
     return json;
   }
 }

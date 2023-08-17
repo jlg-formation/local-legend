@@ -1,46 +1,36 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
+import { TokenObject } from "../interfaces/TokenObject";
 import { stravaApi } from "../strava.api";
-import { Athlete } from "../interfaces/Athlete";
-import { AuthenticationError } from "../errors/errors";
 
 export const useUserStore = defineStore("user", () => {
-  const code = ref<string | undefined>(undefined);
-  const athlete = ref<Athlete | undefined>(undefined);
+  const tokenObject = ref<TokenObject | undefined>(undefined);
 
   const signin = async (authorizationCode: string) => {
     console.log("signin with newCode", authorizationCode);
 
-    const tokenObject = await stravaApi.getTokenObject(authorizationCode);
-    console.log("tokenObject: ", tokenObject);
+    const newTokenObject = await stravaApi.getTokenObject(authorizationCode);
+    console.log("newTokenObject: ", newTokenObject);
 
-    code.value = tokenObject.access_token;
-    stravaApi.accessCode = tokenObject.access_token;
-    await checkConnection();
+    tokenObject.value = newTokenObject;
+    stravaApi.tokenObject = newTokenObject;
   };
   const signout = () => {
-    code.value = undefined;
-    stravaApi.accessCode = "xxx";
-  };
-
-  const checkConnection = async () => {
-    try {
-      athlete.value = await stravaApi.getCurrentAthlete();
-      console.log("athlete: ", athlete.value);
-    } catch (err) {
-      if (err instanceof AuthenticationError) {
-        console.log("signout", err);
-        signout();
-      }
-    }
+    tokenObject.value = undefined;
+    stravaApi.tokenObject = undefined;
   };
 
   const isAuthenticated = computed(() => {
     console.log("isAuthenticated");
 
-    console.log("code.value : ", code.value);
-    return code.value !== undefined;
+    console.log("code.value : ", tokenObject.value);
+    return tokenObject.value !== undefined;
   });
 
-  return { code, athlete, isAuthenticated, signin, signout, checkConnection };
+  return {
+    tokenObject,
+    isAuthenticated,
+    signin,
+    signout,
+  };
 });
