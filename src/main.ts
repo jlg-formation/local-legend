@@ -6,8 +6,6 @@ import { fontawesome } from "./plugins/font-awesome";
 import "./style.scss";
 import { createPinia } from "pinia";
 
-window.scrollTo(0, 1);
-
 const pinia = createPinia();
 
 const router = createRouter({

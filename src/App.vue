@@ -6,9 +6,9 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 div.layout {
-  height: 100vh;
+  height: 100svh;
   display: flex;
   flex-flow: column;
   justify-content: space-between;
