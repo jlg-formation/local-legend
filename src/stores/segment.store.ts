@@ -21,10 +21,20 @@ export const useSegmentStore = defineStore("segment", () => {
     );
     segments.value = merge(newSegments, segments.value).sort(byRemainingEffort);
   };
+
+  const select = (s: DetailedSegment) => {
+    if (selectedSegmentId.value === s.id) {
+      selectedSegmentId.value = undefined;
+      return;
+    }
+    selectedSegmentId.value = s.id;
+  };
+
   return {
     isCapturing,
     segments,
     selectedSegmentId,
     refresh,
+    select,
   };
 });

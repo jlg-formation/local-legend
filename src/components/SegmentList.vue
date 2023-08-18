@@ -8,11 +8,7 @@ const segmentStore = useSegmentStore();
 
 const selectSegment = (s: DetailedSegment) => {
   console.log("s: ", s);
-  if (segmentStore.selectedSegmentId === s.id) {
-    segmentStore.selectedSegmentId = undefined;
-    return;
-  }
-  segmentStore.selectedSegmentId = s.id;
+  segmentStore.select(s);
 };
 </script>
 
@@ -24,6 +20,7 @@ const selectSegment = (s: DetailedSegment) => {
       :key="s.id"
       @click="selectSegment(s)"
       :class="{ selected: s.id === segmentStore.selectedSegmentId }"
+      :id="'segment-' + s.id"
     >
       <div class="first">
         <div class="name">{{ capitalizeFirstLetter(s.name) }}</div>

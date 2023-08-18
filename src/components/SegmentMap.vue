@@ -6,10 +6,51 @@ import SideSheet from "./widgets/SideSheet.vue";
 import SegmentList from "./SegmentList.vue";
 import SegmentConfig from "./SegmentConfig.vue";
 import { useSegmentStore } from "../stores/segment.store";
+import polyline from "@mapbox/polyline";
 
 const mapElement = ref<HTMLElement | null>(null);
 
 const segmentStore = useSegmentStore();
+
+const group = L.layerGroup([]);
+
+const redraw = () => {
+  group.clearLayers();
+
+  for (const s of segmentStore.segments) {
+    let color = "hsla(0, 0%, 70%, 1)";
+    if (
+      segmentStore.selectedSegmentId !== undefined &&
+      segmentStore.selectedSegmentId === s.id
+    ) {
+      color = "hsla(120, 100%, 25%, 1)";
+    }
+    if (segmentStore.selectedSegmentId === undefined) {
+      color = "hsla(120, 100%, 25%, 1)";
+    }
+
+    const segmentPolyline = polyline.decode(s.map.polyline);
+    const visiblePolyline = L.polyline(segmentPolyline, { color: color });
+    const clickablePolyline = L.polyline(segmentPolyline, {
+      color: "transparent",
+      weight: 20,
+    });
+    clickablePolyline.on("click", (...args) => {
+      console.log("polyline click args: ", args);
+      segmentStore.select(s);
+      const parent = document.querySelector(".list") as HTMLElement;
+      console.log("parent: ", parent);
+      const elt = document.querySelector("#segment-" + s.id) as HTMLElement;
+      console.log("elt: ", elt);
+      parent.scrollBy({
+        top: elt.getBoundingClientRect().top,
+        behavior: "smooth",
+      });
+    });
+    group.addLayer(visiblePolyline);
+    group.addLayer(clickablePolyline);
+  }
+};
 
 onMounted(async () => {
   const location = await getInitialLocation();
@@ -31,6 +72,8 @@ onMounted(async () => {
 
   L.control.scale({ imperial: false }).addTo(map);
 
+  redraw();
+
   map.on("moveend", async () => {
     console.log("move");
     if (!segmentStore.isCapturing) {
@@ -39,6 +82,7 @@ onMounted(async () => {
     segmentStore.refresh({
       bounds: map.getBounds(),
     });
+    redraw();
   });
 });
 </script>
