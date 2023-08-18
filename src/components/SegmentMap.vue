@@ -15,6 +15,8 @@ const segmentStore = useSegmentStore();
 const group = L.layerGroup([]);
 
 const redraw = () => {
+  console.log("start redraw");
+
   group.clearLayers();
 
   for (const s of segmentStore.segments) {
@@ -38,18 +40,24 @@ const redraw = () => {
     clickablePolyline.on("click", (...args) => {
       console.log("polyline click args: ", args);
       segmentStore.select(s);
-      const parent = document.querySelector(".list") as HTMLElement;
+      const parent = document.querySelector(".content") as HTMLElement;
       console.log("parent: ", parent);
       const elt = document.querySelector("#segment-" + s.id) as HTMLElement;
       console.log("elt: ", elt);
+      console.log(
+        "elt.getBoundingClientRect().top: ",
+        elt.getBoundingClientRect().top
+      );
       parent.scrollBy({
-        top: elt.getBoundingClientRect().top,
+        top: elt.getBoundingClientRect().top - 48,
         behavior: "smooth",
       });
+      redraw();
     });
     group.addLayer(visiblePolyline);
     group.addLayer(clickablePolyline);
   }
+  console.log("end redraw");
 };
 
 onMounted(async () => {
@@ -69,6 +77,8 @@ onMounted(async () => {
       attribution: "",
     }
   ).addTo(map);
+
+  group.addTo(map);
 
   L.control.scale({ imperial: false }).addTo(map);
 
@@ -132,5 +142,6 @@ div.segment-map {
   &::-webkit-scrollbar {
     display: none;
   }
+  padding-bottom: 5em;
 }
 </style>
