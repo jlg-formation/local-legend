@@ -4,6 +4,7 @@ import { onMounted, ref } from "vue";
 import { getInitialLocation } from "../utils/location";
 import SideSheet from "./widgets/SideSheet.vue";
 import SegmentList from "./SegmentList.vue";
+import SegmentConfig from "./SegmentConfig.vue";
 
 const mapElement = ref<HTMLElement | null>(null);
 
@@ -36,7 +37,10 @@ onMounted(async () => {
     </div>
 
     <SideSheet>
-      <SegmentList />
+      <div class="content">
+        <SegmentConfig />
+        <SegmentList />
+      </div>
     </SideSheet>
   </div>
 </template>
@@ -61,5 +65,11 @@ div.segment-map {
     width: 100%;
     height: 100;
   }
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
 }
 </style>
