@@ -20,6 +20,7 @@ const quotaStore = useQuotaStore();
 
 <style scoped lang="scss">
 label {
+  cursor: pointer;
   height: 3em;
   display: flex;
   align-items: center;
