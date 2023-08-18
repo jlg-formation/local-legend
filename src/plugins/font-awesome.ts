@@ -8,11 +8,13 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faUserSecret,
   faRightToBracket,
+  faAngleRight,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { Plugin } from "vue";
 
 /* add icons to the library */
-library.add(faUserSecret, faRightToBracket);
+library.add(faUserSecret, faRightToBracket, faAngleRight, faXmark);
 
 export const fontawesome: Plugin = {
   install(app) {

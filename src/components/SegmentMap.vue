@@ -2,6 +2,7 @@
 import * as L from "leaflet";
 import { onMounted, ref } from "vue";
 import { getInitialLocation } from "../utils/location";
+import SideSheet from "./widgets/SideSheet.vue";
 
 const mapElement = ref<HTMLElement | null>(null);
 
@@ -28,13 +29,36 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="map" ref="mapElement"></div>
+  <div class="segment-map">
+    <div class="wrapper">
+      <div class="map" ref="mapElement"></div>
+    </div>
+
+    <SideSheet>
+      <p>Hello</p>
+    </SideSheet>
+  </div>
 </template>
 
 <style scoped lang="scss">
-.map {
+div.segment-map {
   flex: 1;
-  width: 100%;
+  display: flex;
   height: 100%;
+  width: 100%;
+}
+.wrapper {
+  flex: 1;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 0;
+
+  .map {
+    flex: 1;
+    width: 100%;
+    height: 100;
+  }
 }
 </style>
