@@ -1,13 +1,15 @@
+import * as L from "leaflet";
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import * as L from "leaflet";
+import { DetailedSegment } from "../interfaces/DetailedSegment";
 import { stravaApi } from "../strava.api";
-import { DetailedSegment } from "@/interfaces/DetailedSegment";
-import { merge } from "../utils/segments";
+import { merge } from "../utils/merge";
+import { getAllSegmentFromCache } from "../utils/segments";
 
 export const useSegmentStore = defineStore("segment", () => {
   const isCapturing = ref(false);
-  const segments = ref<DetailedSegment[]>([]);
+  const segments = ref<DetailedSegment[]>(getAllSegmentFromCache());
+  const selectedSegmentId = ref<number | undefined>(undefined);
 
   const refresh = async (options: { bounds: L.LatLngBounds }) => {
     console.log("options: ", options);
@@ -19,6 +21,7 @@ export const useSegmentStore = defineStore("segment", () => {
   return {
     isCapturing,
     segments,
+    selectedSegmentId,
     refresh,
   };
 });

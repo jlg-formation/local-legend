@@ -3,13 +3,12 @@ import { AuthenticationError } from "./errors/errors";
 import { DetailedSegment } from "./interfaces/DetailedSegment";
 import { ExplorerSegment } from "./interfaces/ExplorerSegment";
 import { TokenObject } from "./interfaces/TokenObject";
-import { getStravaBoundsFromLeafletBounds } from "./utils/bounds";
 import { useQuotaStore } from "./stores/quota.store";
+import { getStravaBoundsFromLeafletBounds } from "./utils/bounds";
 import { appCache } from "./utils/cache";
+import { SEGMENT_PREFIX, addSegmentToCache } from "./utils/segments";
 
 const url = "https://www.strava.com/api/v3";
-
-const SEGMENT_PREFIX = "segment_";
 
 class StravaApi {
   tokenObject: TokenObject | undefined;
@@ -52,7 +51,7 @@ class StravaApi {
       let ds = appCache.get<DetailedSegment>(SEGMENT_PREFIX + s.id);
       if (ds === undefined) {
         ds = await this.getDetailedSegment(s.id);
-        appCache.set(SEGMENT_PREFIX + ds.id, ds);
+        addSegmentToCache(ds);
       }
       detailedSegments.push(ds);
     }
@@ -60,7 +59,7 @@ class StravaApi {
   }
 
   async getTokenObject(authorizationCode: string): Promise<TokenObject> {
-    const response = await fetch(`/oauth/token`, {
+    const response = await fetch(url + `/oauth/token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
