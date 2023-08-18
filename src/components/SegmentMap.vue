@@ -3,6 +3,7 @@ import * as L from "leaflet";
 import { onMounted, ref } from "vue";
 import { getInitialLocation } from "../utils/location";
 import SideSheet from "./widgets/SideSheet.vue";
+import SegmentList from "./SegmentList.vue";
 
 const mapElement = ref<HTMLElement | null>(null);
 
@@ -35,7 +36,7 @@ onMounted(async () => {
     </div>
 
     <SideSheet>
-      <p>Hello</p>
+      <SegmentList />
     </SideSheet>
   </div>
 </template>
