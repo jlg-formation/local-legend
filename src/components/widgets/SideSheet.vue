@@ -23,18 +23,18 @@ const toggle = () => {
 <style scoped lang="scss">
 .sidesheet {
   position: fixed;
-  top: 0;
+  top: 3em;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 3em);
   overflow: hidden;
   z-index: 0;
   pointer-events: none;
 }
 
 .sidesheet-button {
-  position: fixed;
-  top: 4em;
+  position: absolute;
+  top: 1em;
   right: 0.5em;
   pointer-events: auto;
 
@@ -47,7 +47,7 @@ const toggle = () => {
 }
 
 .sidesheet-panel {
-  position: fixed;
+  position: absolute;
   top: 0em;
   left: 0em;
   width: 0;
@@ -56,6 +56,8 @@ const toggle = () => {
   background: white;
   overflow: hidden;
   transition: width 100ms;
+
+  border-radius: 0 0.5em 0.5em 0;
 
   display: flex;
 
