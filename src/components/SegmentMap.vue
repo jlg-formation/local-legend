@@ -5,8 +5,11 @@ import { getInitialLocation } from "../utils/location";
 import SideSheet from "./widgets/SideSheet.vue";
 import SegmentList from "./SegmentList.vue";
 import SegmentConfig from "./SegmentConfig.vue";
+import { useSegmentStore } from "../stores/segment.store";
 
 const mapElement = ref<HTMLElement | null>(null);
+
+const segmentStore = useSegmentStore();
 
 onMounted(async () => {
   const location = await getInitialLocation();
@@ -27,6 +30,13 @@ onMounted(async () => {
   ).addTo(map);
 
   L.control.scale({ imperial: false }).addTo(map);
+
+  map.on("moveend", async () => {
+    console.log("move");
+    segmentStore.refresh({
+      bounds: map.getBounds(),
+    });
+  });
 });
 </script>
 

@@ -9,6 +9,8 @@ export const useUserStore = defineStore("user", () => {
     appCache.get<TokenObject>("tokenObject")
   );
 
+  stravaApi.tokenObject = tokenObject.value;
+
   const signin = async (authorizationCode: string) => {
     console.log("signin with newCode", authorizationCode);
 
