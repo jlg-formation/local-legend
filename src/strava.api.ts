@@ -4,6 +4,7 @@ import { DetailedSegment } from "./interfaces/DetailedSegment";
 import { ExplorerSegment } from "./interfaces/ExplorerSegment";
 import { TokenObject } from "./interfaces/TokenObject";
 import { getStravaBoundsFromLeafletBounds } from "./utils/bounds";
+import { useQuotaStore } from "./stores/quota.store";
 
 const url = "https://www.strava.com/api/v3";
 
@@ -20,6 +21,10 @@ class StravaApi {
         Authorization: `Bearer ${this.tokenObject.access_token}`,
       },
     });
+    if (response.status === 429) {
+      const quotaStore = useQuotaStore();
+      quotaStore.isExeeded = true;
+    }
     return response;
   }
 

@@ -33,6 +33,9 @@ onMounted(async () => {
 
   map.on("moveend", async () => {
     console.log("move");
+    if (!segmentStore.isCapturing) {
+      return;
+    }
     segmentStore.refresh({
       bounds: map.getBounds(),
     });

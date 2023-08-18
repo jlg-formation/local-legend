@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { useQuotaStore } from "../stores/quota.store";
 import { useSegmentStore } from "../stores/segment.store";
 
 const segmentStore = useSegmentStore();
+const quotaStore = useQuotaStore();
 </script>
 
 <template>
@@ -9,13 +11,10 @@ const segmentStore = useSegmentStore();
     <span>Capturing segment</span>
     <input type="checkbox" v-model="segmentStore.isCapturing" />
   </label>
-  <div class="info">
-    <span>Limit (15 min)</span>
-    <span>2 / 100</span>
-  </div>
-  <div class="info">
-    <span>Limit (1 day)</span>
-    <span>2 / 1000</span>
+  <div class="quota" :class="{ exceeded: quotaStore.isExeeded }">
+    <span>{{
+      quotaStore.isExeeded ? "Quota Exceeded... 😫" : "Quota fine 😊"
+    }}</span>
   </div>
 </template>
 
@@ -32,10 +31,16 @@ label {
   }
 }
 
-div.info {
+div.quota {
+  height: 2em;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 0.5em;
+  background: hsl(120, 100%, 97%);
+
+  &.exceeded {
+    background: hsl(0, 100%, 97%);
+  }
 }
 </style>
