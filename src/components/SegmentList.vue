@@ -8,6 +8,11 @@ const segmentStore = useSegmentStore();
 
 const selectSegment = (s: DetailedSegment) => {
   console.log("s: ", s);
+  if (segmentStore.selectedSegmentId === s.id) {
+    segmentStore.selectedSegmentId = undefined;
+    return;
+  }
+  segmentStore.selectedSegmentId = s.id;
 };
 </script>
 
@@ -19,7 +24,6 @@ const selectSegment = (s: DetailedSegment) => {
       :key="s.id"
       @click="selectSegment(s)"
       :class="{ selected: s.id === segmentStore.selectedSegmentId }"
-      :id="'segment-' + s.id"
     >
       <div class="first">
         <div class="name">{{ capitalizeFirstLetter(s.name) }}</div>
@@ -50,6 +54,7 @@ div.list {
   flex: 1;
   display: flex;
   flex-flow: column;
+  cursor: pointer;
 
   .segment {
     padding: 0;
@@ -57,6 +62,17 @@ div.list {
     gap: 0.5em;
     &:nth-child(odd) {
       background: hsl(120, 0%, 95%);
+    }
+
+    &:hover {
+      background: hsl(120, 0%, 90%);
+    }
+
+    &.selected {
+      z-index: 1;
+      box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
+      background-color: hsla(120, 100%, 10%, 0.2);
+      border-color: black;
     }
 
     .first {
