@@ -12,7 +12,6 @@ const selectSegment = (s: DetailedSegment) => {
 </script>
 
 <template>
-  <p>Segment List</p>
   <div class="list">
     <div
       class="segment"
@@ -45,3 +44,56 @@ const selectSegment = (s: DetailedSegment) => {
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+div.list {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+
+  .segment {
+    padding: 0;
+    display: flex;
+    gap: 0.5em;
+    &:nth-child(odd) {
+      background: hsl(120, 0%, 95%);
+    }
+
+    .first {
+      padding: 0.5em;
+      flex: 1;
+      display: flex;
+      flex-flow: column;
+
+      .name {
+        font-weight: bold;
+      }
+
+      .legend {
+        font-size: 0.8em;
+      }
+    }
+
+    .second {
+      padding: 0.25em;
+      margin: 0.25em;
+      border: 0.01em solid hsl(120, 100%, 20%);
+      width: 6em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-flow: column;
+
+      .label {
+        font-size: 0.7em;
+        white-space: nowrap;
+      }
+
+      .value {
+        font-weight: bold;
+        color: hsl(120, 100%, 20%);
+      }
+    }
+  }
+}
+</style>

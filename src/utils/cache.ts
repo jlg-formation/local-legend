@@ -14,6 +14,10 @@ class AppCache {
   set<T>(key: string, value: T) {
     localStorage.setItem(key, JSON.stringify(value));
   }
+
+  clearCache() {
+    localStorage.clear();
+  }
 }
 
 export const appCache = new AppCache();

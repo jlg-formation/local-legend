@@ -84,5 +84,9 @@ div.segment-map {
   flex: 1;
   display: flex;
   flex-flow: column;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 </style>
