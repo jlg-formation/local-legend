@@ -40,8 +40,9 @@ const toggle = () => {
 
   button {
     border-radius: 100%;
-    width: 3em;
-    height: 3em;
+    border: 0;
+    width: 2.5em;
+    height: 2.5em;
     background: #ccc;
   }
 }

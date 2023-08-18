@@ -1,5 +1,7 @@
 import * as L from "leaflet";
 
+const paris: L.LatLngExpression = [48.8567432973677, 2.3393482074403384];
+
 export const getCurrentPosition = (
   options?: PositionOptions
 ): Promise<GeolocationPosition> => {
@@ -15,6 +17,6 @@ export const getInitialLocation = async (): Promise<L.LatLngExpression> => {
     return [pos.coords.latitude, pos.coords.longitude];
   } catch (err) {
     console.log("err: ", err);
-    return [45, 0];
+    return paris;
   }
 };
