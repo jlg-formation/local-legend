@@ -1,7 +1,13 @@
+<script setup lang="ts">
+import { useSegmentStore } from "../stores/segment.store";
+
+const segmentStore = useSegmentStore();
+</script>
+
 <template>
   <label>
     <span>Capturing segment</span>
-    <input type="checkbox" />
+    <input type="checkbox" v-model="segmentStore.isCapturing" />
   </label>
 </template>
 
