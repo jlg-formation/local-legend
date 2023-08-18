@@ -5,8 +5,11 @@ import { ExplorerSegment } from "./interfaces/ExplorerSegment";
 import { TokenObject } from "./interfaces/TokenObject";
 import { getStravaBoundsFromLeafletBounds } from "./utils/bounds";
 import { useQuotaStore } from "./stores/quota.store";
+import { appCache } from "./utils/cache";
 
 const url = "https://www.strava.com/api/v3";
+
+const SEGMENT_PREFIX = "segment_";
 
 class StravaApi {
   tokenObject: TokenObject | undefined;
@@ -28,6 +31,12 @@ class StravaApi {
     return response;
   }
 
+  async getDetailedSegment(id: number): Promise<DetailedSegment> {
+    const response = await this.fetch(`/segments/${id}`);
+    const ds: DetailedSegment = await response.json();
+    return ds;
+  }
+
   async getSegments(bounds: LatLngBounds): Promise<DetailedSegment[]> {
     // first get the segments not detailed.
     const qs = new URLSearchParams({
@@ -35,10 +44,19 @@ class StravaApi {
       activity_type: "running",
     });
     const response = await this.fetch(`/segments/explore?${qs}"`);
-    const segments: ExplorerSegment[] = await response.json();
+    const json: { segments: ExplorerSegment[] } = await response.json();
+    const { segments } = json;
     console.log("segments: ", segments);
-
-    return [];
+    const detailedSegments: DetailedSegment[] = [];
+    for (const s of segments) {
+      let ds = appCache.get<DetailedSegment>(SEGMENT_PREFIX + s.id);
+      if (ds === undefined) {
+        ds = await this.getDetailedSegment(s.id);
+        appCache.set(SEGMENT_PREFIX + ds.id, ds);
+      }
+      detailedSegments.push(ds);
+    }
+    return detailedSegments;
   }
 
   async getTokenObject(authorizationCode: string): Promise<TokenObject> {
