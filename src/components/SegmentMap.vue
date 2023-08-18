@@ -7,6 +7,9 @@ import SegmentList from "./SegmentList.vue";
 import SegmentConfig from "./SegmentConfig.vue";
 import { useSegmentStore } from "../stores/segment.store";
 import polyline from "@mapbox/polyline";
+import { appCache } from "../utils/cache";
+import { SEGMENT_PREFIX } from "../utils/segments";
+import { DetailedSegment } from "../interfaces/DetailedSegment";
 
 const mapElement = ref<HTMLElement | null>(null);
 
@@ -92,6 +95,20 @@ onMounted(async () => {
     segmentStore.refresh({
       bounds: map.getBounds(),
     });
+    redraw();
+  });
+
+  segmentStore.$subscribe((mutation, state) => {
+    console.log("state: ", state);
+    console.log("mutation: ", mutation);
+    console.log("state.selectedSegmentId: ", state.selectedSegmentId);
+    const selectedSegment = appCache.get<DetailedSegment>(
+      SEGMENT_PREFIX + state.selectedSegmentId
+    );
+    if (selectedSegment === undefined) {
+      return;
+    }
+    map.setView(selectedSegment.start_latlng);
     redraw();
   });
 });
