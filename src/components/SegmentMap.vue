@@ -55,7 +55,6 @@ const redraw = () => {
         top: elt.getBoundingClientRect().top - 48,
         behavior: "smooth",
       });
-      redraw();
     });
     group.addLayer(visiblePolyline);
     group.addLayer(clickablePolyline);
@@ -90,6 +89,9 @@ onMounted(async () => {
   map.on("moveend", async () => {
     console.log("move");
     if (!segmentStore.isCapturing) {
+      return;
+    }
+    if (segmentStore.selectedSegmentId !== undefined) {
       return;
     }
     segmentStore.refresh({

@@ -39,9 +39,10 @@ class StravaApi {
   async getSegments(bounds: LatLngBounds): Promise<DetailedSegment[]> {
     // first get the segments not detailed.
     const qs = new URLSearchParams({
-      bounds: getStravaBoundsFromLeafletBounds(bounds),
       activity_type: "running",
-    });
+      bounds: getStravaBoundsFromLeafletBounds(bounds),
+    }).toString();
+    console.log("qs: ", qs);
     const response = await this.fetch(`/segments/explore?${qs}"`);
     const json: { segments: ExplorerSegment[] } = await response.json();
     const { segments } = json;
