@@ -94,7 +94,7 @@ onMounted(async () => {
     if (segmentStore.selectedSegmentId !== undefined) {
       return;
     }
-    segmentStore.refresh({
+    await segmentStore.refresh({
       bounds: map.getBounds(),
     });
     redraw();
