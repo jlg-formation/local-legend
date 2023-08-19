@@ -1,5 +1,5 @@
 import { LatLngBounds } from "leaflet";
-import { AuthenticationError } from "./errors/errors";
+import { AuthenticationError, QuotaError } from "./errors/errors";
 import { DetailedSegment } from "./interfaces/DetailedSegment";
 import { ExplorerSegment } from "./interfaces/ExplorerSegment";
 import { TokenObject } from "./interfaces/TokenObject";
@@ -7,6 +7,8 @@ import { useQuotaStore } from "./stores/quota.store";
 import { getStravaBoundsFromLeafletBounds } from "./utils/bounds";
 import { appCache } from "./utils/cache";
 import { SEGMENT_PREFIX, addSegmentToCache } from "./utils/segments";
+import { useUserStore } from "./stores/user.store";
+import { useRouter } from "vue-router";
 
 const url = "https://www.strava.com/api/v3";
 
@@ -26,7 +28,16 @@ class StravaApi {
     if (response.status === 429) {
       const quotaStore = useQuotaStore();
       quotaStore.isExeeded = true;
+      throw new QuotaError();
     }
+    if (response.status === 401) {
+      const userStore = useUserStore();
+      userStore.signout();
+      const router = useRouter();
+      router.replace({ name: "Signin" });
+      throw new AuthenticationError();
+    }
+
     return response;
   }
 

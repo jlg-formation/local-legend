@@ -3,3 +3,8 @@ export class AuthenticationError extends Error {
     super("Authentication error" + (message ? `: ${message}` : ""));
   }
 }
+export class QuotaError extends Error {
+  constructor(message?: string) {
+    super("Quota error" + (message ? `: ${message}` : ""));
+  }
+}

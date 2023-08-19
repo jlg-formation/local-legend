@@ -94,10 +94,15 @@ onMounted(async () => {
     if (segmentStore.selectedSegmentId !== undefined) {
       return;
     }
-    await segmentStore.refresh({
-      bounds: map.getBounds(),
-    });
-    redraw();
+    try {
+      await segmentStore.refresh({
+        bounds: map.getBounds(),
+      });
+    } catch (err) {
+      console.log("err: ", err);
+    } finally {
+      redraw();
+    }
   });
 
   segmentStore.$subscribe((mutation, state) => {
