@@ -1,15 +1,16 @@
 <script setup lang="ts">
+import polyline from "@mapbox/polyline";
 import * as L from "leaflet";
 import { onMounted, ref } from "vue";
-import { getInitialLocation } from "../utils/location";
-import SideSheet from "./widgets/SideSheet.vue";
-import SegmentList from "./SegmentList.vue";
-import SegmentConfig from "./SegmentConfig.vue";
-import { useSegmentStore } from "../stores/segment.store";
-import polyline from "@mapbox/polyline";
-import { appCache } from "../utils/cache";
-import { SEGMENT_PREFIX } from "../utils/segments";
 import { DetailedSegment } from "../interfaces/DetailedSegment";
+import { useSegmentStore } from "../stores/segment.store";
+import { appCache } from "../utils/cache";
+import { getInitialLocation } from "../utils/location";
+import { scrollToSegment } from "../utils/scroll";
+import { SEGMENT_PREFIX } from "../utils/segments";
+import SegmentConfig from "./SegmentConfig.vue";
+import SegmentList from "./SegmentList.vue";
+import SideSheet from "./widgets/SideSheet.vue";
 
 const mapElement = ref<HTMLElement | null>(null);
 
@@ -43,18 +44,7 @@ const redraw = () => {
     clickablePolyline.on("click", (...args) => {
       console.log("polyline click args: ", args);
       segmentStore.select(s);
-      const parent = document.querySelector(".content") as HTMLElement;
-      console.log("parent: ", parent);
-      const elt = document.querySelector("#segment-" + s.id) as HTMLElement;
-      console.log("elt: ", elt);
-      console.log(
-        "elt.getBoundingClientRect().top: ",
-        elt.getBoundingClientRect().top
-      );
-      parent.scrollBy({
-        top: elt.getBoundingClientRect().top - 48,
-        behavior: "smooth",
-      });
+      scrollToSegment(s.id);
     });
     group.addLayer(visiblePolyline);
     group.addLayer(clickablePolyline);
