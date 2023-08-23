@@ -62,13 +62,10 @@ onMounted(async () => {
     13
   );
 
-  L.tileLayer(
-    "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png",
-    {
-      maxZoom: 20,
-      attribution: "",
-    }
-  ).addTo(map);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 20,
+    attribution: "",
+  }).addTo(map);
 
   group.addTo(map);
 
