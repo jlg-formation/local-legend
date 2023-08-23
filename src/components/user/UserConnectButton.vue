@@ -1,6 +1,6 @@
 <script setup lang="ts">
 console.log("window.location.origin: ", window.location.origin);
-const redirectUri = `${window.location.origin}/#/exchange_token`;
+const redirectUri = `${window.location.origin}/local-legend/#/exchange_token`;
 const stravaUri = "http://www.strava.com/oauth/authorize";
 
 const link =
