@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { reactive, ref, watch } from "vue";
+import { computed, reactive } from "vue";
+import { useRouter } from "vue-router";
+import { useApiStore } from "../../stores/api.store";
+import { isCliendIdValid, isClientSecretValid } from "../../utils/valid";
 import FooterLayout from "../layout/FooterLayout.vue";
 import HeaderLayout from "../layout/HeaderLayout.vue";
-import { useApiStore } from "../../stores/api.store";
-import { useRouter } from "vue-router";
 import { HOME_NAMEROUTE } from "./config";
-import { isCliendIdValid, isClientSecretValid } from "../../utils/valid";
 
 const apiStore = useApiStore();
 const router = useRouter();
@@ -15,14 +15,10 @@ const fields = reactive({
   clientSecret: apiStore.clientSecret,
 });
 
-const isValid = ref(
-  isCliendIdValid(fields.clientId) && isClientSecretValid(fields.clientSecret)
-);
-
-watch(fields, () => {
-  isValid.value =
-    isCliendIdValid(fields.clientId) &&
-    isClientSecretValid(fields.clientSecret);
+const isValid = computed(() => {
+  return (
+    isCliendIdValid(fields.clientId) && isClientSecretValid(fields.clientSecret)
+  );
 });
 
 const submit = () => {
