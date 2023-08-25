@@ -35,7 +35,7 @@ const toggle = () => {
 .sidesheet-button {
   position: absolute;
   top: 1em;
-  right: 0.5em;
+  left: 0.5em;
   pointer-events: auto;
 
   button {
@@ -43,7 +43,7 @@ const toggle = () => {
     border: 0;
     width: 2.5em;
     height: 2.5em;
-    background: #ccc;
+    background: white;
   }
 }
 
