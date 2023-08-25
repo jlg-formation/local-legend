@@ -21,7 +21,12 @@ const signout = () => {
 <template>
   <HeaderLayout />
   <main>
-    <h1>Welcome {{ userStore.tokenObject?.athlete.firstname }}</h1>
+    <h1>
+      Welcome
+      <span class="one-word">{{
+        userStore.tokenObject?.athlete.firstname
+      }}</span>
+    </h1>
     <button class="primary" @click="signout">Sign out</button>
   </main>
   <FooterLayout />

@@ -1,9 +1,11 @@
+import { useRouter } from "vue-router";
+import { useUserStore } from "../../stores/user.store";
+import ApiKeyRoute from "./ApiKeyRoute.vue";
+import ExchangeTokenRoute from "./ExchangeTokenRoute.vue";
 import HomeRoute from "./HomeRoute.vue";
 import LegalRoute from "./LegalRoute.vue";
-import ExchangeTokenRoute from "./ExchangeTokenRoute.vue";
 import SigninRoute from "./SigninRoute.vue";
 import UserRoute from "./UserRoute.vue";
-import ApiKeyRoute from "./ApiKeyRoute.vue";
 
 export const HOME_NAMEROUTE = "Home";
 export const LEGAL_NAMEROUTE = "Legal";
@@ -24,3 +26,28 @@ export const routes = [
   { path: "/user", name: USER_NAMEROUTE, component: UserRoute },
   { path: "/api-key", name: APIKEY_NAMEROUTE, component: ApiKeyRoute },
 ];
+
+export const configGuards = () => {
+  const router = useRouter();
+  const freeRoutes = [
+    SIGNIN_NAMEROUTE,
+    LEGAL_NAMEROUTE,
+    EXCHANGE_TOKEN_NAMEROUTE,
+    APIKEY_NAMEROUTE,
+  ];
+  router.beforeEach(async (to) => {
+    if (typeof to.name !== "string") {
+      return;
+    }
+    const userStore = useUserStore();
+    if (
+      // make sure the user is authenticated
+      !userStore.isAuthenticated &&
+      // ❗️ Avoid an infinite redirect
+      !freeRoutes.includes(to.name)
+    ) {
+      // redirect the user to the login page
+      return { name: SIGNIN_NAMEROUTE };
+    }
+  });
+};

@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { configGuards } from "./components/routes/config.ts";
+
+configGuards();
+</script>
 
 <template>
   <div class="layout">
