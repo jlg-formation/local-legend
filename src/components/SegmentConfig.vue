@@ -16,7 +16,11 @@ const reset = async () => {
   <div class="config">
     <label>
       <span>Capturing segment</span>
-      <input type="checkbox" v-model="segmentStore.isCapturing" />
+      <input
+        name="captureSegment"
+        type="checkbox"
+        v-model="segmentStore.isCapturing"
+      />
     </label>
     <div class="quota" :class="{ exceeded: quotaStore.isExeeded }">
       <span>{{

@@ -121,6 +121,7 @@ const toggle = () => {
 
   .sidesheet-panel {
     height: 100%;
+    width: 100%;
     padding: 0;
     pointer-events: auto;
     background: white;
