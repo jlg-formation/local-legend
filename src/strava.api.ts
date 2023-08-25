@@ -73,6 +73,7 @@ class StravaApi {
   }
 
   async getTokenObject(authorizationCode: string): Promise<TokenObject> {
+    const clientSecret = await getClientSecret();
     const response = await fetch(url + `/oauth/token`, {
       method: "POST",
       headers: {
@@ -80,7 +81,7 @@ class StravaApi {
       },
       body: JSON.stringify({
         client_id: 97719,
-        client_secret: getClientSecret(),
+        client_secret: clientSecret,
         code: authorizationCode,
         grant_type: "authorization_code",
       }),

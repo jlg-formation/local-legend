@@ -1,34 +1,11 @@
-(async () => {
-  const base64ToUint8 = (str: string) =>
-    Uint8Array.from(atob(str), (c) => c.charCodeAt(0));
+import { base64ToUint8 } from "./convert";
 
-  const uint8ToBase64 = (arr: Uint8Array): string =>
-    btoa(
-      Array(arr.length)
-        .fill("")
-        .map((_, i) => String.fromCharCode(arr[i]))
-        .join("")
-    );
-
+export const getClientSecret = async () => {
   const ivBase64 = "JLBKavdwQ/88O/qKeN1lyA==";
   const iv = base64ToUint8(ivBase64);
   console.log("iv: ", iv);
 
-  const clearClientSecret = new TextEncoder().encode(
-    "6e91c19ab727fa6fedc51d1c39860dd68ddb718c"
-  );
-
-  const key = await window.crypto.subtle.generateKey(
-    {
-      name: "AES-CBC",
-      length: 256,
-    },
-    true,
-    ["encrypt", "decrypt"]
-  );
-  console.log("key: ", key);
-  const keyAB = await window.crypto.subtle.exportKey("raw", key);
-  const keyStr = uint8ToBase64(new Uint8Array(keyAB));
+  const keyStr = "dtvgcQqZYfNwlU/LDX25bLfb/aW/q494AYR3hZNhraE=";
   console.log("keyStr: ", keyStr);
 
   const retrievedKey = await window.crypto.subtle.importKey(
@@ -43,19 +20,11 @@
   );
   console.log("retrievedKey: ", retrievedKey);
 
-  const cryptedClientSecret = await window.crypto.subtle.encrypt(
-    {
-      name: "AES-CBC",
-      iv,
-    },
-    key,
-    clearClientSecret
-  );
-  console.log("cryptedClientSecret: ", cryptedClientSecret);
-  const cryptedClientSecretStr = uint8ToBase64(
-    new Uint8Array(cryptedClientSecret)
-  );
+  const cryptedClientSecretStr =
+    "9226PdGb3DX5c83on13t+yxo0gFk1TqrgXgW265Lxl4st31G4yHYpim2dwhbapMe";
   console.log("cryptedClientSecretStr: ", cryptedClientSecretStr);
+
+  const cryptedClientSecret = base64ToUint8(cryptedClientSecretStr).buffer;
 
   const decrypted = await window.crypto.subtle.decrypt(
     {
@@ -68,11 +37,5 @@
   console.log("decrypted: ", decrypted);
   const decryptedStr = new TextDecoder().decode(decrypted);
   console.log("decryptedStr: ", decryptedStr);
-})();
-
-export const getClientSecret = async () => {
-  //   const result = await window.crypto.subtle.decrypt({
-  //     name: "AES-CTR",
-  //   });
   return "6e91c19ab727fa6fedc51d1c39860dd68ddb718c";
 };
