@@ -1,19 +1,32 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import FooterLayout from "../layout/FooterLayout.vue";
 import HeaderLayout from "../layout/HeaderLayout.vue";
 import { useApiStore } from "../../stores/api.store";
 import { useRouter } from "vue-router";
 import { HOME_NAMEROUTE } from "./config";
+import { isCliendIdValid, isClientSecretValid } from "../../utils/valid";
 
 const apiStore = useApiStore();
 const router = useRouter();
 
-const clientId = ref(apiStore.clientId);
-const clientSecret = ref(apiStore.clientSecret);
+const fields = reactive({
+  clientId: apiStore.clientId,
+  clientSecret: apiStore.clientSecret,
+});
+
+const isValid = ref(
+  isCliendIdValid(fields.clientId) && isClientSecretValid(fields.clientSecret)
+);
+
+watch(fields, () => {
+  isValid.value =
+    isCliendIdValid(fields.clientId) &&
+    isClientSecretValid(fields.clientSecret);
+});
 
 const submit = () => {
-  apiStore.update(clientId.value, clientSecret.value);
+  apiStore.update(fields.clientId, fields.clientSecret);
   window.alert("update successfull! 😀");
   router.push({ name: HOME_NAMEROUTE });
 };
@@ -26,13 +39,13 @@ const submit = () => {
     <form @submit.prevent="submit">
       <label>
         <span>Strava API Client ID</span>
-        <input type="text" v-model="clientId" />
+        <input type="text" v-model="fields.clientId" />
       </label>
       <label>
         <span>Strava API Client Secret</span>
-        <input type="text" v-model="clientSecret" />
+        <input type="text" v-model="fields.clientSecret" />
       </label>
-      <button class="primary">Update</button>
+      <button class="primary" :disabled="!isValid">Update</button>
     </form>
   </main>
   <FooterLayout />
