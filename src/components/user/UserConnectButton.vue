@@ -6,7 +6,7 @@ const link = ref("");
 
 onMounted(async () => {
   console.log("window.location.origin: ", window.location.origin);
-  console.log("import.meta.env.BASE_URL: ", import.meta.env.BASE_URL);
+  console.log("BASE_URL:", import.meta.env.BASE_URL);
   const url = window.location.origin + import.meta.env.BASE_URL;
   const redirectUri = `${url}#/exchange_token`;
   const stravaUri = "http://www.strava.com/oauth/authorize";
