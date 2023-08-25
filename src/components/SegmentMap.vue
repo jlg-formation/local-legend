@@ -6,7 +6,6 @@ import { DetailedSegment } from "../interfaces/DetailedSegment";
 import { useSegmentStore } from "../stores/segment.store";
 import { appCache } from "../utils/cache";
 import { getInitialLocation } from "../utils/location";
-import { scrollToSegment } from "../utils/scroll";
 import { SEGMENT_PREFIX } from "../utils/segments";
 import SegmentConfig from "./SegmentConfig.vue";
 import SegmentList from "./SegmentList.vue";
