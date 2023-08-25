@@ -19,3 +19,9 @@ if (!userStore.isAuthenticated) {
     <SegmentMap />
   </main>
 </template>
+
+<style scoped lang="scss">
+main {
+  padding: 0;
+}
+</style>
