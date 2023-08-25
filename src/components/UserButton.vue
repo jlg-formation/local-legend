@@ -14,13 +14,14 @@ const userStore = useUserStore();
     </router-link>
   </div>
 
-  <div class="round-button" v-else>
+  <RouterLink to="/signin" class="round-button" v-else>
     <font-awesome-icon icon="right-to-bracket" />
-  </div>
+  </RouterLink>
 </template>
 
 <style lang="scss" scoped>
 .round-button {
+  cursor: pointer;
   border-radius: 100%;
   background: #ddd;
   height: 2.5em;
