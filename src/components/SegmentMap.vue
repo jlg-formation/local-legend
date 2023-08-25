@@ -110,10 +110,6 @@ onMounted(async () => {
 
 <template>
   <div class="segment-map">
-    <div class="wrapper">
-      <div class="map" ref="mapElement"></div>
-    </div>
-
     <SideSheet>
       <template v-slot:title> Segments </template>
       <div class="content">
@@ -121,6 +117,9 @@ onMounted(async () => {
         <SegmentList />
       </div>
     </SideSheet>
+    <div class="wrapper">
+      <div class="map" ref="mapElement"></div>
+    </div>
   </div>
 </template>
 
