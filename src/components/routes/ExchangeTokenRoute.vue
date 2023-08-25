@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../../stores/user.store";
 import { AuthenticationError } from "../../errors/errors";
+import { HOME_NAMEROUTE, SIGNIN_NAMEROUTE } from "./config";
 
 const router = useRouter();
 
@@ -17,7 +18,7 @@ onMounted(async () => {
     const params = new URLSearchParams(queryString);
     const error = params.get("error");
     if (error !== null) {
-      router.replace({ name: "Signin" });
+      router.replace({ name: SIGNIN_NAMEROUTE });
       return;
     }
     const code = params.get("code");
@@ -31,14 +32,14 @@ onMounted(async () => {
   } catch (err) {
     if (err instanceof AuthenticationError) {
       message.value = "Bad authentication";
-      router.replace({ name: "Signin" });
+      router.replace({ name: SIGNIN_NAMEROUTE });
       return;
     }
     throw err;
   }
   message.value = "Yes you did it.";
 
-  router.replace({ name: "Home" });
+  router.replace({ name: HOME_NAMEROUTE });
 });
 </script>
 

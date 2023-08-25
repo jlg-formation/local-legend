@@ -10,6 +10,7 @@ import { useUserStore } from "./stores/user.store";
 import { getStravaBoundsFromLeafletBounds } from "./utils/bounds";
 import { appCache } from "./utils/cache";
 import { SEGMENT_PREFIX, addSegmentToCache } from "./utils/segments";
+import { SIGNIN_NAMEROUTE } from "./components/routes/config";
 
 const url = "https://www.strava.com/api/v3";
 
@@ -35,7 +36,7 @@ class StravaApi {
       const userStore = useUserStore();
       userStore.signout();
       const router = useRouter();
-      router.replace({ name: "Signin" });
+      router.replace({ name: SIGNIN_NAMEROUTE });
       throw new AuthenticationError();
     }
 

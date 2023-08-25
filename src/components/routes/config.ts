@@ -5,15 +5,22 @@ import SigninRoute from "./SigninRoute.vue";
 import UserRoute from "./UserRoute.vue";
 import ApiKeyRoute from "./ApiKeyRoute.vue";
 
+export const HOME_NAMEROUTE = "Home";
+export const LEGAL_NAMEROUTE = "Legal";
+export const SIGNIN_NAMEROUTE = "Signin";
+export const EXCHANGE_TOKEN_NAMEROUTE = "ExchangeToken";
+export const USER_NAMEROUTE = "User";
+export const APIKEY_NAMEROUTE = "ApiKey";
+
 export const routes = [
-  { path: "/", name: "Home", component: HomeRoute },
-  { path: "/legal", name: "Legal", component: LegalRoute },
+  { path: "/", name: HOME_NAMEROUTE, component: HomeRoute },
+  { path: "/legal", name: LEGAL_NAMEROUTE, component: LegalRoute },
   {
     path: "/exchange_token",
-    name: "ExchangeToken",
+    name: EXCHANGE_TOKEN_NAMEROUTE,
     component: ExchangeTokenRoute,
   },
-  { path: "/signin", name: "Signin", component: SigninRoute },
-  { path: "/user", name: "User", component: UserRoute },
-  { path: "/api-key", name: "ApiKey", component: ApiKeyRoute },
+  { path: "/signin", name: SIGNIN_NAMEROUTE, component: SigninRoute },
+  { path: "/user", name: USER_NAMEROUTE, component: UserRoute },
+  { path: "/api-key", name: APIKEY_NAMEROUTE, component: ApiKeyRoute },
 ];
