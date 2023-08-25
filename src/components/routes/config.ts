@@ -3,6 +3,7 @@ import LegalRoute from "./LegalRoute.vue";
 import ExchangeTokenRoute from "./ExchangeTokenRoute.vue";
 import SigninRoute from "./SigninRoute.vue";
 import UserRoute from "./UserRoute.vue";
+import ApiKeyRoute from "./ApiKeyRoute.vue";
 
 export const routes = [
   { path: "/", name: "Home", component: HomeRoute },
@@ -14,4 +15,5 @@ export const routes = [
   },
   { path: "/signin", name: "Signin", component: SigninRoute },
   { path: "/user", name: "User", component: UserRoute },
+  { path: "/api-key", name: "ApiKey", component: ApiKeyRoute },
 ];

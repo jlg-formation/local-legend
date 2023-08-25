@@ -8,6 +8,13 @@ import UserConnectButton from "../user/UserConnectButton.vue";
   <HeaderLayout />
   <main>
     <UserConnectButton />
+    <RouterLink to="/api-key">Set your own Strava API key</RouterLink>
   </main>
   <FooterLayout />
 </template>
+
+<style scoped lang="scss">
+main {
+  gap: 2em;
+}
+</style>

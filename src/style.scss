@@ -4,6 +4,7 @@
 @use "../node_modules/leaflet/dist/leaflet.css";
 
 @use "./scss/button.scss";
+@use "./scss/form.scss";
 
 body {
   font-family: sans-serif;
@@ -16,4 +17,5 @@ main {
   flex-flow: column;
   align-items: center;
   justify-content: center;
+  gap: 0.5em;
 }
