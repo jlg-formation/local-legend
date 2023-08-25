@@ -9,6 +9,7 @@ import { appCache } from "./utils/cache";
 import { SEGMENT_PREFIX, addSegmentToCache } from "./utils/segments";
 import { useUserStore } from "./stores/user.store";
 import { useRouter } from "vue-router";
+import { getClientSecret } from "./utils/secret";
 
 const url = "https://www.strava.com/api/v3";
 
@@ -79,7 +80,7 @@ class StravaApi {
       },
       body: JSON.stringify({
         client_id: 97719,
-        client_secret: "6e91c19ab727fa6f" + "edc51d1c39860dd68ddb718c",
+        client_secret: getClientSecret(),
         code: authorizationCode,
         grant_type: "authorization_code",
       }),
