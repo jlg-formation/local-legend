@@ -88,6 +88,9 @@ class StravaApi {
         grant_type: "authorization_code",
       }),
     });
+    if (response.status === 401) {
+      throw new AuthenticationError("bad secret");
+    }
     const json = await response.json();
     return json;
   }

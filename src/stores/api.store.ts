@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { getDefaultClientSecret } from "../utils/secret";
+import { appCache } from "../utils/cache";
 
 export const useApiStore = defineStore("api", () => {
-  const clientId = ref("");
-  const clientSecret = ref("");
+  const clientId = ref(appCache.getOrDefault("clientId", ""));
+  const clientSecret = ref(appCache.getOrDefault("clientSecret", ""));
 
   const getClientId = (): string => {
     if (clientId.value !== "") {
@@ -23,6 +24,8 @@ export const useApiStore = defineStore("api", () => {
   const update = (newClientId: string, newClientSecret: string) => {
     clientId.value = newClientId;
     clientSecret.value = newClientSecret;
+    appCache.set("clientId", newClientId);
+    appCache.set("clientSecret", newClientSecret);
   };
 
   return {
