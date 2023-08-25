@@ -36,7 +36,7 @@ export const getEncryptedOAuth2ClientSecret = async (
   console.log("encryptedStr: ", encryptedStr);
 })();
 
-export const getClientSecret = async () => {
+export const getDefaultClientSecret = async () => {
   const iv = base64ToUint8(base64InitializationVector);
   const key = await window.crypto.subtle.importKey(
     "raw",

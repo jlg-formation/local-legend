@@ -11,6 +11,11 @@ onMounted(async () => {
   const hash = window.location.hash;
   const queryString = hash.replace(/^.*\?/, "");
   const params = new URLSearchParams(queryString);
+  const error = params.get("error");
+  if (error !== null) {
+    router.replace({ name: "Signin" });
+    return;
+  }
   const code = params.get("code");
   if (code === null) {
     throw new Error("code is null");

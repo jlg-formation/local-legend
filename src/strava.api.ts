@@ -1,15 +1,15 @@
 import { LatLngBounds } from "leaflet";
+import { useRouter } from "vue-router";
 import { AuthenticationError, QuotaError } from "./errors/errors";
 import { DetailedSegment } from "./interfaces/DetailedSegment";
 import { ExplorerSegment } from "./interfaces/ExplorerSegment";
 import { TokenObject } from "./interfaces/TokenObject";
+import { useApiStore } from "./stores/api.store";
 import { useQuotaStore } from "./stores/quota.store";
+import { useUserStore } from "./stores/user.store";
 import { getStravaBoundsFromLeafletBounds } from "./utils/bounds";
 import { appCache } from "./utils/cache";
 import { SEGMENT_PREFIX, addSegmentToCache } from "./utils/segments";
-import { useUserStore } from "./stores/user.store";
-import { useRouter } from "vue-router";
-import { getClientSecret } from "./utils/secret";
 
 const url = "https://www.strava.com/api/v3";
 
@@ -73,14 +73,16 @@ class StravaApi {
   }
 
   async getTokenObject(authorizationCode: string): Promise<TokenObject> {
-    const clientSecret = await getClientSecret();
+    const apiStore = useApiStore();
+    const clientId = apiStore.getClientId();
+    const clientSecret = await apiStore.getClientSecret();
     const response = await fetch(url + `/oauth/token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        client_id: 97719,
+        client_id: clientId,
         client_secret: clientSecret,
         code: authorizationCode,
         grant_type: "authorization_code",
