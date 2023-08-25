@@ -12,7 +12,7 @@ onMounted(async () => {
   const stravaUri = "http://www.strava.com/oauth/authorize";
 
   const apiStore = useApiStore();
-  const clientId = await apiStore.getClientId();
+  const clientId = apiStore.getClientId();
 
   link.value =
     `${stravaUri}?client_id=${clientId}&approval_prompt=force&scope=read&response_type=code` +
