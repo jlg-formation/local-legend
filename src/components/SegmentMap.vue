@@ -115,6 +115,7 @@ onMounted(async () => {
     </div>
 
     <SideSheet>
+      <template v-slot:title> Segments </template>
       <div class="content">
         <SegmentConfig />
         <SegmentList />
