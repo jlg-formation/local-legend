@@ -6,8 +6,8 @@ import { appCache } from "../utils/cache";
 const segmentStore = useSegmentStore();
 const quotaStore = useQuotaStore();
 
-const reset = () => {
-  appCache.clearCache();
+const reset = async () => {
+  await appCache.clearCache();
   window.location.reload();
 };
 </script>

@@ -9,10 +9,12 @@ import { byRemainingEffort } from "../utils/sort";
 
 export const useSegmentStore = defineStore("segment", () => {
   const isCapturing = ref(false);
-  const segments = ref<DetailedSegment[]>(
-    getAllSegmentFromCache().sort(byRemainingEffort)
-  );
+  const segments = ref<DetailedSegment[]>([]);
   const selectedSegmentId = ref<number | undefined>(undefined);
+
+  (async () => {
+    segments.value = (await getAllSegmentFromCache()).sort(byRemainingEffort);
+  })();
 
   const refresh = async (options: { bounds: L.LatLngBounds }) => {
     console.log("options: ", options);

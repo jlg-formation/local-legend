@@ -92,11 +92,11 @@ onMounted(async () => {
     }
   });
 
-  segmentStore.$subscribe((mutation, state) => {
+  segmentStore.$subscribe(async (mutation, state) => {
     console.log("state: ", state);
     console.log("mutation: ", mutation);
     console.log("state.selectedSegmentId: ", state.selectedSegmentId);
-    const selectedSegment = appCache.get<DetailedSegment>(
+    const selectedSegment = await appCache.get<DetailedSegment>(
       SEGMENT_PREFIX + state.selectedSegmentId
     );
     if (selectedSegment === undefined) {

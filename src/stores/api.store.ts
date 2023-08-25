@@ -4,8 +4,13 @@ import { getDefaultClientSecret } from "../utils/secret";
 import { appCache } from "../utils/cache";
 
 export const useApiStore = defineStore("api", () => {
-  const clientId = ref(appCache.getOrDefault("clientId", ""));
-  const clientSecret = ref(appCache.getOrDefault("clientSecret", ""));
+  const clientId = ref("");
+  const clientSecret = ref("");
+
+  (async () => {
+    clientId.value = await appCache.getOrDefault("clientId", "");
+    clientSecret.value = await appCache.getOrDefault("clientSecret", "");
+  })();
 
   const getClientId = (): string => {
     if (clientId.value !== "") {
@@ -21,11 +26,14 @@ export const useApiStore = defineStore("api", () => {
     return await getDefaultClientSecret();
   };
 
-  const update = (newClientId: string, newClientSecret: string) => {
+  const update = async (
+    newClientId: string,
+    newClientSecret: string
+  ): Promise<void> => {
     clientId.value = newClientId;
     clientSecret.value = newClientSecret;
-    appCache.set("clientId", newClientId);
-    appCache.set("clientSecret", newClientSecret);
+    await appCache.set("clientId", newClientId);
+    await appCache.set("clientSecret", newClientSecret);
   };
 
   return {

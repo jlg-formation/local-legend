@@ -5,11 +5,12 @@ import { stravaApi } from "../strava.api";
 import { appCache } from "../utils/cache";
 
 export const useUserStore = defineStore("user", () => {
-  const tokenObject = ref<TokenObject | undefined>(
-    appCache.get<TokenObject>("tokenObject")
-  );
+  const tokenObject = ref<TokenObject | undefined>(undefined);
 
-  stravaApi.tokenObject = tokenObject.value;
+  (async () => {
+    tokenObject.value = await appCache.get<TokenObject>("tokenObject");
+    stravaApi.tokenObject = tokenObject.value;
+  })();
 
   const signin = async (authorizationCode: string) => {
     console.log("signin with newCode", authorizationCode);
@@ -19,12 +20,13 @@ export const useUserStore = defineStore("user", () => {
 
     tokenObject.value = newTokenObject;
     stravaApi.tokenObject = newTokenObject;
-    appCache.set<TokenObject>("tokenObject", newTokenObject);
+    await appCache.set<TokenObject>("tokenObject", newTokenObject);
   };
-  const signout = () => {
+
+  const signout = async () => {
     tokenObject.value = undefined;
     stravaApi.tokenObject = undefined;
-    appCache.remove("tokenObject");
+    await appCache.remove("tokenObject");
   };
 
   const isAuthenticated = computed(() => {

@@ -7,7 +7,6 @@
 - deselection should deselect on the map.
 - recheck distance formula (remaininEfforts)
 - mettre le bouton du sidesheet a gauche
-- permettre a l'utilisateur d'utiliser ses propres cles API.
 - use localforage
 
 ## Author

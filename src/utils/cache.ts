@@ -1,30 +1,32 @@
+import * as localforage from "localforage";
+
 class AppCache {
-  get<T>(key: string) {
-    const value = localStorage.getItem(key);
+  async get<T>(key: string): Promise<T | undefined> {
+    const value = await localforage.getItem<string>(key);
     if (value === null) {
       return undefined;
     }
     return JSON.parse(value) as T;
   }
 
-  getOrDefault<T>(key: string, defaultValue: T): T {
-    const value = localStorage.getItem(key);
+  async getOrDefault<T>(key: string, defaultValue: T): Promise<T> {
+    const value = await localforage.getItem<string>(key);
     if (value === null) {
       return defaultValue;
     }
     return JSON.parse(value) as T;
   }
 
-  remove(key: string) {
-    localStorage.removeItem(key);
+  async remove(key: string): Promise<void> {
+    await localforage.removeItem(key);
   }
 
-  set<T>(key: string, value: T) {
-    localStorage.setItem(key, JSON.stringify(value));
+  async set<T>(key: string, value: T): Promise<void> {
+    await localforage.setItem(key, JSON.stringify(value));
   }
 
-  clearCache() {
-    localStorage.clear();
+  async clearCache(): Promise<void> {
+    await localforage.clear();
   }
 }
 

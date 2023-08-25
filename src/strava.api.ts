@@ -63,7 +63,7 @@ class StravaApi {
     console.log("segments: ", segments);
     const detailedSegments: DetailedSegment[] = [];
     for (const s of segments) {
-      let ds = appCache.get<DetailedSegment>(SEGMENT_PREFIX + s.id);
+      let ds = await appCache.get<DetailedSegment>(SEGMENT_PREFIX + s.id);
       if (ds === undefined) {
         ds = await this.getDetailedSegment(s.id);
         addSegmentToCache(ds);
