@@ -44,7 +44,11 @@ const redraw = () => {
     clickablePolyline.on("click", (...args) => {
       console.log("polyline click args: ", args);
       segmentStore.select(s);
-      scrollToSegment(s.id);
+      // if (segmentStore.selectedSegmentId === s.id) {
+      //   scrollToSegment(s.id);
+      //   return;
+      // }
+      redraw();
     });
     group.addLayer(visiblePolyline);
     group.addLayer(clickablePolyline);
