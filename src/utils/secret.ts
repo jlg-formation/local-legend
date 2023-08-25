@@ -1,16 +1,17 @@
-import { base64ToUint8 } from "./convert";
+import { base64ToUint8, uint8ToBase64 } from "./convert";
 
-export const getClientSecret = async () => {
-  const ivBase64 = "JLBKavdwQ/88O/qKeN1lyA==";
-  const iv = base64ToUint8(ivBase64);
-  console.log("iv: ", iv);
+const base64InitializationVector = "JLBKavdwQ/88O/qKeN1lyA==";
+const base64AESSecretKey = "dtvgcQqZYfNwlU/LDX25bLfb/aW/q494AYR3hZNhraE=";
+const base64EncryptedOAuth2ClientSecret =
+  "fgNYYGfgKbHo6OmQykBl9+se6YG1FyNH/dz4H/Nw7O6gbRLr9N8OOZnOI1RUYyT4";
 
-  const keyStr = "dtvgcQqZYfNwlU/LDX25bLfb/aW/q494AYR3hZNhraE=";
-  console.log("keyStr: ", keyStr);
-
-  const retrievedKey = await window.crypto.subtle.importKey(
+export const getEncryptedOAuth2ClientSecret = async (
+  clientSecretStr: string
+) => {
+  const iv = base64ToUint8(base64InitializationVector);
+  const key = await window.crypto.subtle.importKey(
     "raw",
-    base64ToUint8(keyStr).buffer,
+    base64ToUint8(base64AESSecretKey).buffer,
     {
       name: "AES-CBC",
       length: 256,
@@ -18,24 +19,50 @@ export const getClientSecret = async () => {
     true,
     ["encrypt", "decrypt"]
   );
-  console.log("retrievedKey: ", retrievedKey);
-
-  const cryptedClientSecretStr =
-    "9226PdGb3DX5c83on13t+yxo0gFk1TqrgXgW265Lxl4st31G4yHYpim2dwhbapMe";
-  console.log("cryptedClientSecretStr: ", cryptedClientSecretStr);
-
-  const cryptedClientSecret = base64ToUint8(cryptedClientSecretStr).buffer;
-
-  const decrypted = await window.crypto.subtle.decrypt(
+  const encryptedOAuth2ClientSecret = await window.crypto.subtle.encrypt(
     {
       name: "AES-CBC",
       iv,
     },
-    retrievedKey,
-    cryptedClientSecret
+    key,
+    new TextEncoder().encode(clientSecretStr)
   );
-  console.log("decrypted: ", decrypted);
-  const decryptedStr = new TextDecoder().decode(decrypted);
-  console.log("decryptedStr: ", decryptedStr);
-  return "6e91c19ab727fa6fedc51d1c39860dd68ddb718c";
+
+  return uint8ToBase64(new Uint8Array(encryptedOAuth2ClientSecret));
+};
+
+(async () => {
+  const encryptedStr = await getEncryptedOAuth2ClientSecret("xxx");
+  console.log("encryptedStr: ", encryptedStr);
+})();
+
+export const getClientSecret = async () => {
+  const iv = base64ToUint8(base64InitializationVector);
+  const key = await window.crypto.subtle.importKey(
+    "raw",
+    base64ToUint8(base64AESSecretKey).buffer,
+    {
+      name: "AES-CBC",
+      length: 256,
+    },
+    true,
+    ["encrypt", "decrypt"]
+  );
+
+  const encryptedOAuth2ClientSecret = base64ToUint8(
+    base64EncryptedOAuth2ClientSecret
+  ).buffer;
+
+  const oAuth2ClientSecret = await window.crypto.subtle.decrypt(
+    {
+      name: "AES-CBC",
+      iv,
+    },
+    key,
+    encryptedOAuth2ClientSecret
+  );
+
+  const oAuth2ClientSecretStr = new TextDecoder().decode(oAuth2ClientSecret);
+  console.log("oAuth2ClientSecretStr: ", oAuth2ClientSecretStr);
+  return oAuth2ClientSecretStr;
 };
