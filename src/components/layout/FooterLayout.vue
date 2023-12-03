@@ -1,6 +1,8 @@
 <template>
   <footer>
-    <router-link to="/legal"> Legal Information </router-link>
+    <router-link to="/legal">
+      Legal Information - Powered by Strava
+    </router-link>
   </footer>
 </template>
 

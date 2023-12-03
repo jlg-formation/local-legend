@@ -22,5 +22,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <a class="button primary" :href="link">Connect with Strava</a>
+  <a :href="link" title="Connect with Strava">
+    <img src="/btn_strava_connectwith_orange.svg" alt="Connect with Strava" />
+  </a>
 </template>

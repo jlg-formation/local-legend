@@ -24,6 +24,9 @@ const toggle = () => {
         </div>
       </div>
       <slot></slot>
+      <div class="side-sheet-footer">
+        <RouterLink to="/legal">Legal info - Powered by Strava</RouterLink>
+      </div>
     </div>
   </div>
 </template>
@@ -104,6 +107,13 @@ const toggle = () => {
         font-weight: bold;
       }
     }
+
+    .side-sheet-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5em;
+    }
   }
 }
 
@@ -149,6 +159,13 @@ const toggle = () => {
         justify-content: center;
         font-weight: bold;
       }
+    }
+
+    .side-sheet-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5em;
     }
   }
 }
