@@ -27,8 +27,11 @@ class StravaApi {
         Authorization: `Bearer ${this.tokenObject.access_token}`,
       },
     });
+    const quotas = response.headers.get("X-Ratelimit-Usage");
+    console.log("quotas: ", quotas);
+    const quotaStore = useQuotaStore();
+    quotaStore.isExeeded = false;
     if (response.status === 429) {
-      const quotaStore = useQuotaStore();
       quotaStore.isExeeded = true;
       throw new QuotaError();
     }
